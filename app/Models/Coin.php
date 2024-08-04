@@ -12,12 +12,14 @@ class Coin extends Model
     protected $fillable = [
         'name',
         'code',
+        'img_src',
         'price',
         'one_hr_percent',
         'day_percent',
         'week_percent',
         'market_cap',
-        'volume',
+        'volume_amount',
+        'volume_coins',
         'circulating_supply'
     ];
 

@@ -15,13 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
+            $table->string('img_src')->nullable();
             $table->float('price')->nullable();
             $table->float('one_hr_percent')->nullable();
             $table->float('day_percent')->nullable();
             $table->float('week_percent')->nullable();
-            $table->float('market_cap')->nullable();
-            $table->float('volume')->nullable();
-            $table->float('circulating_supply')->nullable();
+            $table->unsignedDouble('market_cap')->nullable();
+            $table->unsignedDouble('volume_coins')->nullable();
+            $table->unsignedDouble('volume_amount')->nullable();
+            $table->unsignedDouble('circulating_supply')->nullable();
             $table->timestamps();
         });
     }

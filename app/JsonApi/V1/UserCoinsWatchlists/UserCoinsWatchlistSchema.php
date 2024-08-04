@@ -1,18 +1,16 @@
 <?php
 
-namespace App\JsonApi\V1\Users;
+namespace App\JsonApi\V1\UserCoinsWatchlists;
 
-use App\Models\User;
+use App\Models\UserCoinWatchList;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
-use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class UserSchema extends Schema
+class UserCoinsWatchlistSchema extends Schema
 {
 
     /**
@@ -20,7 +18,7 @@ class UserSchema extends Schema
      *
      * @var string
      */
-    public static string $model = User::class;
+    public static string $model = UserCoinWatchList::class;
 
     /**
      * Get the resource fields.
@@ -31,13 +29,8 @@ class UserSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make("name")->sortable(),
-            Str::make("email")->sortable(),
-            Str::make("role")->sortable(),
-            HasMany::make("coins_watchlist"),
-            DateTime::make('email_verified_at')->sortable()->readOnly(),
-            DateTime::make('created_at')->sortable()->readOnly(),
-            DateTime::make('updated_at')->sortable()->readOnly(),
+            DateTime::make('createdAt')->sortable()->readOnly(),
+            DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }
 

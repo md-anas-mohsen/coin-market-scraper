@@ -2,7 +2,7 @@
 
 namespace App\Spiders;
 
-use CoinMarketCapSaveToDBProcessor;
+use App\Processors\CoinMarketCapSaveToDBProcessor;
 use Generator;
 use RoachPHP\Downloader\Middleware\RequestDeduplicationMiddleware;
 use RoachPHP\Downloader\Middleware\UserAgentMiddleware;
@@ -54,11 +54,13 @@ class CoinMarketCapSpider extends BasicSpider
         $columns = $response
                     ->filter('th.stickyTop div div p')
                     ->each(fn(Crawler $node) => $node->text());
-        
-        $rows = $response->filter('tbody tr')->each(function (Crawler $row) use($columns) {
+
+        $columns_count = $response->filter('th.stickyTop')->count();
+
+        $rows = $response->filter('tbody tr')->each(function (Crawler $row) use($columns, $columns_count) {
             $col_data = [];
             
-            for($i = 0; $i < count($columns); $i++) {
+            for($i = 0; $i < $columns_count; $i++) {
                 $col_data[] = $row->filter('td')->eq($i);
             }
             
