@@ -1,11 +1,13 @@
 <?php
 
+use App\Spiders\CoinMarketCapSpider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
+use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
-use Spatie\Browsershot\Browsershot;
-
+use LaravelJsonApi\Laravel\Routing\RouteRegistrar;
+use RoachPHP\Roach;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,13 +27,15 @@ Route::get('/load-coins', function (Request $request) {
     $output = shell_exec('cd .. && node capture_coins_prices.js');
     Storage::disk('public')->put('coins.html', $output);
 
+    Roach::startSpider(CoinMarketCapSpider::class);
+
     return [
         'foo' => 'bar'
     ];
 });
 
-// JsonApiRoute::server('v1')
-//     ->prefix('v1')
-//     ->resources(function (ResourceRegistrar $server) {
-//         $server->resource('posts', PostController::class);
-//     });
+JsonApiRoute::server('v1')
+    ->prefix('v1')
+    ->resources(function (ResourceRegistrar $server) {
+        $server->resource('users', JsonApiController::class);
+    });

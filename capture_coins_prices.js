@@ -7,6 +7,7 @@ import * as puppeteer from "puppeteer";
     const page = await browser.newPage();
     await page.goto("https://coinmarketcap.com/", {
         waitUntil: "networkidle2",
+        timeout: 120000,
     });
 
     // Function to perform autoscrolling

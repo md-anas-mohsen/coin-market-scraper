@@ -2,6 +2,7 @@
 
 namespace App\Spiders;
 
+use CoinMarketCapSaveToDBProcessor;
 use Generator;
 use RoachPHP\Downloader\Middleware\RequestDeduplicationMiddleware;
 use RoachPHP\Downloader\Middleware\UserAgentMiddleware;
@@ -31,7 +32,7 @@ class CoinMarketCapSpider extends BasicSpider
     ];
 
     public array $itemProcessors = [
-        //
+        CoinMarketCapSaveToDBProcessor::class
     ];
 
     public array $extensions = [
