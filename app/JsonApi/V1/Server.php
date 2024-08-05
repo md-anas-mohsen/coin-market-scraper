@@ -5,6 +5,8 @@ namespace App\JsonApi\V1;
 use App\JsonApi\V1\Coins\CoinSchema;
 use App\JsonApi\V1\UserCoinsWatchlists\UserCoinsWatchlistSchema;
 use App\JsonApi\V1\Users\UserSchema;
+use App\Models\UserCoinWatchList;
+use Illuminate\Support\Facades\Auth;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
 class Server extends BaseServer
@@ -24,7 +26,10 @@ class Server extends BaseServer
      */
     public function serving(): void
     {
-        // no-op
+        Auth::shouldUse('sanctum');
+        UserCoinWatchList::creating(static function (UserCoinWatchList $userCoinWatchList): void {
+            $userCoinWatchList->user()->associate(Auth::user());
+        });
     }
 
     /**

@@ -27,9 +27,9 @@ class UserPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(?User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -62,5 +62,17 @@ class UserPolicy
     public function forceDelete(User $user, User $model): bool
     {
         //
+    }
+
+    /**
+    * Determine whether the user can view the user's coin watchlist.
+    *
+    * @param  \App\Models\User|null  $user
+    * @param  \App\Models\User  $model
+    * @return \Illuminate\Auth\Access\Response|bool
+    */
+    public function viewUserCoinsWatchLists(?User $user, User $model)
+    {
+        return $this->view($user, $model);
     }
 }

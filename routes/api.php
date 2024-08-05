@@ -7,6 +7,7 @@ use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
 use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
 use LaravelJsonApi\Laravel\Routing\RouteRegistrar;
+use LaravelJsonApi\Laravel\Routing\Relationships;
 use RoachPHP\Roach;
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,10 @@ Route::get('/load-coins', function (Request $request) {
 JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function (ResourceRegistrar $server) {
-        $server->resource('users', JsonApiController::class);
+        $server->resource('users', JsonApiController::class)
+            ->only('index', 'show', 'store')
+            ->relationships(function (Relationships $relations) {
+                $relations->hasMany('user_coins_watchlists')->readOnly();
+            });
         $server->resource('coins', JsonApiController::class);
     });

@@ -23,6 +23,13 @@ class UserSchema extends Schema
     public static string $model = User::class;
 
     /**
+     * The maximum include path depth.
+     *
+     * @var int
+     */
+    protected int $maxDepth = 3;
+
+    /**
      * Get the resource fields.
      *
      * @return array
@@ -34,7 +41,8 @@ class UserSchema extends Schema
             Str::make("name")->sortable(),
             Str::make("email")->sortable(),
             Str::make("role")->sortable(),
-            HasMany::make("coins_watchlist"),
+            Str::make("password")->hidden(),
+            HasMany::make("user_coins_watchlists"),
             DateTime::make('email_verified_at')->sortable()->readOnly(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),

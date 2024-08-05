@@ -48,7 +48,7 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function coins(): HasMany
+    public function userCoinsWatchLists(): HasMany
     {
         return $this->hasMany(UserCoinWatchList::class);
     }

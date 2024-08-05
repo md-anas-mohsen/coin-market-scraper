@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserCoinWatchList extends Model
@@ -15,13 +16,13 @@ class UserCoinWatchList extends Model
         "coin_id"
     ];
 
-    public function coin(): HasOne
+    public function coin(): BelongsTo
     {
-        return $this->hasOne(Coin::class);
+        return $this->belongsTo(Coin::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
